@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wijk Paol – De leukste wijk van Nederland</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --roze:         #e0198a;
+      --roze-licht:   #f472b6;
+      --roze-zacht:   #fce7f3;
+      --blauw:        #1e9bd7;
+      --blauw-licht:  #38bdf8;
+      --blauw-zacht:  #e0f2fe;
+      --geel:         #f5c800;
+      --geel-zacht:   #fef9c3;
+      --groen:        #5cb85c;
+      --groen-zacht:  #dcfce7;
+      --rood:         #e8393a;
+      --wit:          #ffffff;
+      --achtergrond:  #fdf6fb;
+      --donker:       #1e0a18;
+      --grijs:        #6b5f69;
+      --rand:         #f0d9eb;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--achtergrond); color: var(--donker); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.8rem 2.5rem;
+      background: rgba(255,255,255,0.94); backdrop-filter: blur(14px);
+      border-bottom: 2px solid var(--rand); transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(224,25,138,0.12); }
+    .nav-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+    .nav-logo-svg { width: 42px; height: 42px; flex-shrink: 0; }
+    .nav-logo-text { font-family: 'Montserrat', sans-serif; font-size: 1.35rem; font-weight: 900; letter-spacing: -0.5px; line-height: 1; }
+    .nav-logo-text .wijk { color: var(--blauw); font-size: 0.62em; display: block; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+    .nav-logo-text .paol { color: var(--roze); }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--donker); font-size: 0.9rem; font-weight: 700; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--roze); }
+    .nav-cta { background: var(--roze) !important; color: #fff !important; padding: 0.5rem 1.3rem; border-radius: 50px; box-shadow: 0 4px 14px rgba(224,25,138,0.3); transition: background 0.2s, transform 0.2s !important; }
+    .nav-cta:hover { background: #c2177a !important; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; border: none; background: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2.5px; background: var(--donker); border-radius: 2px; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; padding: 7rem 2.5rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero-bubbles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+    .bubble { position: absolute; border-radius: 50%; opacity: 0.12; animation: float 6s ease-in-out infinite; }
+    .b1 { width: 420px; height: 420px; background: var(--roze);  top: -80px; right: 80px; animation-delay: 0s; }
+    .b2 { width: 320px; height: 320px; background: var(--blauw); top: 50px;  right: -70px; animation-delay: -2s; }
+    .b3 { width: 200px; height: 200px; background: var(--geel);  bottom: 60px; left: 42%; animation-delay: -4s; }
+    .b4 { width: 100px; height: 100px; background: var(--groen); top: 32%; left: 8%; animation-delay: -1s; }
+    .b5 { width: 60px;  height: 60px;  background: var(--rood);  bottom: 22%; right: 22%; animation-delay: -3s; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+
+    .hero-content { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--roze-zacht); color: var(--roze);
+      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.5rem;
+      border: 1.5px solid #f9a8d4; animation: fadeUp 0.6s ease both;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif; font-size: clamp(2.8rem, 5vw, 4.8rem);
+      font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .c-roze { color: var(--roze); } .c-blauw { color: var(--blauw); } .c-donker { color: var(--donker); }
+    .hero p { font-size: 1.1rem; color: var(--grijs); line-height: 1.75; max-width: 460px; margin-bottom: 2.5rem; animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s ease both; }
+    .btn-primary {
+      background: var(--roze); color: #fff; padding: 0.9rem 2.2rem; border-radius: 50px;
+      text-decoration: none; font-weight: 800; font-size: 0.95rem;
+      box-shadow: 0 6px 20px rgba(224,25,138,0.35); transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { background: #c2177a; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(224,25,138,0.4); }
+    .btn-secondary {
+      background: var(--wit); color: var(--donker); padding: 0.9rem 2.2rem; border-radius: 50px;
+      text-decoration: none; font-weight: 800; font-size: 0.95rem; border: 2px solid var(--rand);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--blauw); color: var(--blauw); transform: translateY(-2px); }
+
+    .hero-visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; animation: fadeUp 0.7s 0.15s ease both; }
+    .hero-logo-wrap { position: relative; width: 380px; height: 400px; display: flex; align-items: center; justify-content: center; }
+    .hero-logo-wrap svg { width: 100%; height: 100%; filter: drop-shadow(0 20px 60px rgba(224,25,138,0.22)); }
+    .floating-tag {
+      position: absolute; background: white; border-radius: 14px; padding: 0.6rem 1rem;
+      font-weight: 800; font-size: 0.78rem; box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+      display: flex; align-items: center; gap: 0.4rem; animation: float 4s ease-in-out infinite; white-space: nowrap;
+    }
+    .ft1 { top: 20px;   right: -20px; animation-delay: 0s;  border-left: 3px solid var(--blauw); }
+    .ft2 { bottom: 70px; left: -30px; animation-delay: -2s; border-left: 3px solid var(--roze); }
+    .ft3 { top: 48%;    right: -40px; animation-delay: -1s; border-left: 3px solid var(--geel); }
+
+    /* STATS */
+    .stats-bar { background: var(--donker); padding: 2.5rem; display: flex; justify-content: center; gap: 5rem; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900; line-height: 1; }
+    .sn-roze{color:var(--roze-licht)} .sn-blauw{color:var(--blauw-licht)} .sn-geel{color:var(--geel)} .sn-groen{color:#86efac}
+    .stat-label { font-size: 0.78rem; color: #a090a0; margin-top: 0.4rem; font-weight: 700; }
+
+    /* SECTIONS */
+    section { padding: 5rem 2.5rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label { display: inline-block; font-size: 0.73rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 50px; margin-bottom: 1rem; }
+    .sl-roze { background: var(--roze-zacht); color: var(--roze); border: 1.5px solid #f9a8d4; }
+    .sl-blauw { background: var(--blauw-zacht); color: var(--blauw); border: 1.5px solid #7dd3fc; }
+    .sl-geel  { background: var(--geel-zacht);  color: #a16207; border: 1.5px solid #fde68a; }
+    h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(1.9rem, 3.5vw, 2.7rem); font-weight: 900; color: var(--donker); line-height: 1.12; margin-bottom: 0.8rem; letter-spacing: -0.5px; }
+    .section-intro { font-size: 1.05rem; color: var(--grijs); max-width: 560px; line-height: 1.75; margin-bottom: 3rem; font-weight: 500; }
+
+    /* OVER ONS */
+    #overons { background: var(--wit); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .about-img-wrap {
+      position: relative; border-radius: 24px; overflow: hidden; aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--roze-zacht) 0%, var(--blauw-zacht) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-img-wrap .logo-in { width: 78%; }
+    .about-badge { position: absolute; bottom: 1.5rem; right: 1.5rem; background: var(--donker); color: white; padding: 0.8rem 1.2rem; border-radius: 14px; font-size: 0.78rem; font-weight: 700; }
+    .about-badge strong { display: block; font-size: 1.4rem; font-family: 'Montserrat', sans-serif; color: var(--geel); }
+    .values { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .value-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .value-dot { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .vd-roze{background:var(--roze-zacht)} .vd-blauw{background:var(--blauw-zacht)} .vd-geel{background:var(--geel-zacht)}
+    .value-text strong { display: block; font-weight: 800; margin-bottom: 0.2rem; }
+    .value-text p { font-size: 0.88rem; color: var(--grijs); line-height: 1.65; }
+
+    /* ACTIVITEITEN */
+    #activiteiten { background: var(--achtergrond); }
+    .activiteiten-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 1.5rem; }
+    .act-card { background: var(--wit); border-radius: 20px; border: 2px solid var(--rand); overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; }
+    .act-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(224,25,138,0.13); }
+    .act-header { padding: 1.3rem 1.5rem; display: flex; align-items: center; gap: 1rem; color: white; }
+    .act-datum { text-align: center; min-width: 54px; background: rgba(255,255,255,0.2); border-radius: 12px; padding: 0.4rem 0.6rem; }
+    .act-datum .dag { font-size: 1.4rem; font-weight: 900; font-family: 'Montserrat', sans-serif; line-height: 1; }
+    .act-datum .maand { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.9; font-weight: 700; }
+    .act-naam { font-weight: 800; font-size: 1rem; line-height: 1.3; }
+    .act-body { padding: 1.3rem 1.5rem; }
+    .act-body p { font-size: 0.88rem; color: var(--grijs); line-height: 1.65; }
+    .act-tag { display: inline-block; margin-top: 0.8rem; font-size: 0.75rem; padding: 0.3rem 0.8rem; border-radius: 50px; font-weight: 700; }
+
+    /* SPONSOREN */
+    #sponsoren { background: var(--wit); }
+    .sponsor-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(190px,1fr)); gap: 1.2rem; margin-bottom: 2.5rem; }
+    .sponsor-card { background: var(--achtergrond); border: 2px solid var(--rand); border-radius: 16px; padding: 1.5rem; text-align: center; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+    .sponsor-card:hover { border-color: var(--roze); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(224,25,138,0.12); }
+    .sponsor-logo { font-size: 2.5rem; margin-bottom: 0.6rem; }
+    .sponsor-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .sponsor-desc { font-size: 0.8rem; color: var(--grijs); }
+    .sponsor-add { border-style: dashed; border-color: var(--roze); background: var(--roze-zacht); }
+
+    /* CONTACT */
+    #lidworden { background: var(--donker); position: relative; overflow: hidden; }
+    #lidworden::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 50% 60% at 90% 20%, rgba(224,25,138,0.15) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 50% at 10% 80%, rgba(30,155,215,0.12) 0%, transparent 60%);
+    }
+    #lidworden h2 { color: white; } #lidworden .section-intro { color: #a090a0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; position: relative; z-index: 1; }
+    .contact-form { background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 2rem; }
+    .form-row { margin-bottom: 1.2rem; }
+    .form-row label { display: block; font-size: 0.8rem; color: #a090a0; margin-bottom: 0.4rem; font-weight: 700; }
+    .form-row input, .form-row textarea, .form-row select {
+      width: 100%; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.14);
+      border-radius: 12px; padding: 0.8rem 1rem; color: white;
+      font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 500; outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-row input::placeholder, .form-row textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-row input:focus, .form-row textarea:focus, .form-row select:focus { border-color: var(--roze-licht); }
+    .form-row textarea { resize: vertical; min-height: 110px; }
+    .form-row select option { background: #2a1025; color: white; }
+    .btn-form { width: 100%; background: var(--roze); color: white; padding: 0.95rem; border-radius: 50px; border: none; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 6px 20px rgba(224,25,138,0.4); transition: background 0.2s, transform 0.2s; }
+    .btn-form:hover { background: #c2177a; transform: translateY(-1px); }
+    .contact-info { color: white; position: relative; z-index: 1; }
+    .contact-info h3 { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 900; margin-bottom: 2rem; }
+    .contact-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-start; }
+    .contact-icon { width: 46px; height: 46px; border-radius: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .ci-roze{background:rgba(224,25,138,0.2)} .ci-blauw{background:rgba(30,155,215,0.2)} .ci-geel{background:rgba(245,200,0,0.2)}
+    .contact-item-text strong { display: block; font-size: 0.78rem; color: #a090a0; margin-bottom: 0.2rem; font-weight: 700; }
+    .contact-item-text span { font-size: 0.95rem; font-weight: 600; }
+    .social-links { display: flex; gap: 0.8rem; margin-top: 2rem; }
+    .social-link { width: 46px; height: 46px; border-radius: 14px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.1); transition: background 0.2s, transform 0.2s; }
+    .social-link:hover { background: var(--roze); transform: translateY(-2px); border-color: var(--roze); }
+
+    /* FOOTER */
+    footer { background: #0f0810; color: #6b5f69; padding: 1.5rem 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.82rem; font-weight: 600; }
+    footer a { color: #6b5f69; text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--roze-licht); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1.5rem; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 1.5rem 2rem; border-bottom: 2px solid var(--rand); gap: 1.2rem; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; padding: 5.5rem 1.5rem 3rem; text-align: center; }
+      .hero p { margin: 0 auto 2.5rem; }
+      .hero-btns { justify-content: center; }
+      .hero-visual { display: none; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .stats-bar { gap: 2rem; }
+      section { padding: 3.5rem 1.5rem; }
+      footer { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <img src="logo-paol.jpg" alt="Wijk Paol logo" class="nav-logo-svg" style="object-fit:contain;background:transparent;" />
+    <div class="nav-logo-text">
+      <span class="wijk">Wijk</span>
+      <span class="paol">Paol</span>
+    </div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#overons">Over ons</a></li>
+    <li><a href="#activiteiten">Activiteiten</a></li>
+    <li><a href="#sponsoren">Sponsoren</a></li>
+    <li><a href="#lidworden" class="nav-cta">Lid worden</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-bubbles">
+    <div class="bubble b1"></div><div class="bubble b2"></div>
+    <div class="bubble b3"></div><div class="bubble b4"></div><div class="bubble b5"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🌟 Wijkvereniging Oud Gastel</div>
+    <h1>
+      <span class="c-donker">De leukste</span><br>
+      <span class="c-roze">wijk</span> <span class="c-blauw">van</span><br>
+      <span class="c-donker">Nederland</span>
+    </h1>
+    <p>Wijk Paol verbindt buren, organiseert geweldige activiteiten en maakt van onze buurt de fijnste plek om te wonen.</p>
+    <div class="hero-btns">
+      <a href="#activiteiten" class="btn-primary">🎉 Bekijk activiteiten</a>
+      <a href="#lidworden" class="btn-secondary">Word lid →</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-logo-wrap">
+      <img src="logo-paol.jpg" alt="Wijk Paol logo" style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 20px 60px rgba(224,25,138,0.22));" />
+      <div class="floating-tag ft1">🎬 Filmavond jeugd</div>
+      <div class="floating-tag ft2">🎃 Halloween activiteit</div>
+      <div class="floating-tag ft3">🎅 Bingo + Sinterklaas</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat reveal"><div class="stat-num sn-roze">#1</div><div class="stat-label">Beste wijk</div></div>
+  <div class="stat reveal"><div class="stat-num sn-blauw">3+</div><div class="stat-label">Activiteiten per jaar</div></div>
+  <div class="stat reveal"><div class="stat-num sn-geel">100%</div><div class="stat-label">Buurtplezier</div></div>
+  <div class="stat reveal"><div class="stat-num sn-groen">💚</div><div class="stat-label">Voor heel de wijk</div></div>
+</div>
+
+<!-- OVER ONS -->
+<section id="overons">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img src="logo-paol.jpg" alt="Wijk Paol logo" class="logo-in" />
+        <div class="about-badge"><strong>Paol</strong>De leukste wijk</div>
+      </div>
+      <div class="reveal">
+        <span class="section-label sl-roze">Over ons</span>
+        <h2>Meer dan een wijk –<br>een gemeenschap</h2>
+        <p class="section-intro">Wijk Paol is de wijkvereniging van een stukje Oud Gastel. We geloven dat een sterke buurt begint bij mensen die elkaar kennen, helpen en samen plezier maken.</p>
+        <div class="values">
+          <div class="value-item">
+            <div class="value-dot vd-roze">🤝</div>
+            <div class="value-text"><strong>Verbinding</strong><p>We brengen buren bij elkaar door activiteiten voor jong en oud.</p></div>
+          </div>
+          <div class="value-item">
+            <div class="value-dot vd-blauw">🎉</div>
+            <div class="value-text"><strong>Gezelligheid</strong><p>Van filmavonden tot Sinterklaas – bij Wijk Paol is er altijd wat te beleven.</p></div>
+          </div>
+          <div class="value-item">
+            <div class="value-dot vd-geel">🌱</div>
+            <div class="value-text"><strong>Saamhorigheid</strong><p>Samen maken we van Oud Gastel een plek waar iedereen zich thuis voelt.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITEITEN -->
+<section id="activiteiten">
+  <div class="section-inner">
+    <span class="section-label sl-blauw">Agenda</span>
+    <h2>Activiteiten</h2>
+    <p class="section-intro">Houd onze agenda in de gaten – er is altijd iets gezelligs te doen in de wijk. Exacte datums volgen!</p>
+    <div class="activiteiten-grid">
+      <div class="act-card reveal">
+        <div class="act-header" style="background:linear-gradient(135deg,var(--blauw),var(--blauw-licht))">
+          <div class="act-datum"><div class="dag">APR</div><div class="maand">2026</div></div>
+          <div class="act-naam">🎬 Filmavond voor jeugd</div>
+        </div>
+        <div class="act-body">
+          <p>Een gezellige filmavond speciaal voor kinderen t/m 12 jaar. Popcorn, deken mee en genieten maar!</p>
+          <span class="act-tag" style="background:var(--blauw-zacht);color:var(--blauw)">👶 t/m 12 jaar</span>
+        </div>
+      </div>
+      <div class="act-card reveal">
+        <div class="act-header" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">
+          <div class="act-datum"><div class="dag">OKT</div><div class="maand">2026</div></div>
+          <div class="act-naam">🎃 Halloween activiteit</div>
+        </div>
+        <div class="act-body">
+          <p>Griezelen in de buurt! Een enge maar gezellige Halloween-activiteit voor de hele wijk.</p>
+          <span class="act-tag" style="background:#f3e8ff;color:#7c3aed">👻 Heel de wijk</span>
+        </div>
+      </div>
+      <div class="act-card reveal">
+        <div class="act-header" style="background:linear-gradient(135deg,var(--roze),var(--roze-licht))">
+          <div class="act-datum"><div class="dag">NOV</div><div class="maand">2026</div></div>
+          <div class="act-naam">🎅 Bingo + Sinterklaas</div>
+        </div>
+        <div class="act-body">
+          <p>De jaarlijkse bingo-avond gecombineerd met een bezoek van de Sint. Voor jong en oud een avond om niet te missen!</p>
+          <span class="act-tag" style="background:var(--roze-zacht);color:var(--roze)">🎁 Familie-activiteit</span>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:2rem;color:var(--grijs);font-size:0.9rem;font-weight:600;">📱 Volg ons op social media voor exacte datums en laatste updates.</p>
+  </div>
+</section>
+
+<!-- SPONSOREN -->
+<section id="sponsoren">
+  <div class="section-inner">
+    <span class="section-label sl-geel">Onze steunpilaren</span>
+    <h2>Sponsoren</h2>
+    <p class="section-intro">Zonder onze sponsoren zijn onze activiteiten niet mogelijk. Enorm bedankt voor jullie steun!</p>
+    <div class="sponsor-grid">
+      <div class="sponsor-card reveal"><div class="sponsor-logo">🍞</div><div class="sponsor-name">De Lokale Bakker</div><div class="sponsor-desc">Versgebakken steun voor de wijk</div></div>
+      <div class="sponsor-card reveal"><div class="sponsor-logo">🔧</div><div class="sponsor-name">Garage Jansen</div><div class="sponsor-desc">Uw betrouwbare automonteur</div></div>
+      <div class="sponsor-card reveal"><div class="sponsor-logo">🏗️</div><div class="sponsor-name">Tegelzetter Pieter</div><div class="sponsor-desc">Vakmanschap in elke steen</div></div>
+      <div class="sponsor-card sponsor-add reveal"><div class="sponsor-logo">✨</div><div class="sponsor-name" style="color:var(--roze)">Word sponsor!</div><div class="sponsor-desc">Zichtbaarheid + een warm gevoel</div></div>
+    </div>
+    <a href="#lidworden" class="btn-primary">Sponsor worden</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="lidworden">
+  <div class="section-inner">
+    <span class="section-label" style="background:rgba(224,25,138,0.15);color:var(--roze-licht);border:1.5px solid rgba(224,25,138,0.3)">Contact</span>
+    <h2>Lid worden of contact?</h2>
+    <p class="section-intro">Wil je lid worden, sponsor zijn of gewoon een vraag stellen? Stuur ons een bericht!</p>
+    <div class="contact-grid">
+      <div class="contact-form reveal">
+        <div class="form-row"><label>Naam</label><input type="text" placeholder="Jan de Vries"/></div>
+        <div class="form-row"><label>E-mailadres</label><input type="email" placeholder="jan@voorbeeld.nl"/></div>
+        <div class="form-row">
+          <label>Ik ben geïnteresseerd in...</label>
+          <select><option>Lid worden</option><option>Sponsor worden</option><option>Algemene vraag</option><option>Activiteiten</option></select>
+        </div>
+        <div class="form-row"><label>Bericht</label><textarea placeholder="Schrijf hier je bericht..."></textarea></div>
+        <button class="btn-form" onclick="handleForm(event)">Verstuur bericht 🚀</button>
+      </div>
+      <div class="contact-info reveal">
+        <h3>Gewoon langskomen?</h3>
+        <div class="contact-item">
+          <div class="contact-icon ci-roze">📍</div>
+          <div class="contact-item-text"><strong>Adres</strong><span>Elzenpad 3<br>4751 JP Oud Gastel</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon ci-blauw">📧</div>
+          <div class="contact-item-text"><strong>E-mail</strong><span>wijkpaol@gmail.com</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon ci-geel">⏰</div>
+          <div class="contact-item-text"><strong>Reactietijd</strong><span>Binnen 2 werkdagen</span></div>
+        </div>
+        <div class="social-links">
+          <a href="#" class="social-link" title="Facebook">📘</a>
+          <a href="#" class="social-link" title="Instagram">📸</a>
+          <a href="#" class="social-link" title="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;gap:0.7rem;">
+    <img src="logo-paol.jpg" alt="Wijk Paol" style="width:32px;height:32px;object-fit:contain;" />
+    © 2026 <strong style="color:#a090a0;margin-left:0.3rem;">Wijk Paol</strong>&nbsp;· Oud Gastel
+  </div>
+  <div><a href="#overons">Over ons</a> · <a href="#activiteiten">Activiteiten</a> · <a href="#lidworden">Contact</a></div>
+  <div><a href="#home">↑ Terug naar boven</a></div>
+</footer>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => { if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'), i*80); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  function handleForm(e) {
+    e.preventDefault(); const btn=e.target;
+    btn.textContent='✅ Verstuurd! We nemen snel contact op.';
+    btn.style.background='#5cb85c'; btn.disabled=true;
+  }
+</script>
+</body>
+</html>
